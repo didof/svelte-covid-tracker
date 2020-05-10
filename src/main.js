@@ -1,10 +1,10 @@
-import App from './App.svelte';
+import App from './App.svelte'
+
+import 'bulma/css/bulma.min.css'
 
 const app = new App({
 	target: document.body,
-	props: {
-		name: 'world'
-	}
-});
+	props: {},
+})
 
-export default app;
+export default app

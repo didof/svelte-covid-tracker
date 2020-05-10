@@ -1,5 +1,7 @@
 # Setup proxy
 
+> [tutorial](https://www.youtube.com/watch?v=EHikjXtRp_k)
+
 The API I selected [COVID19 API ITALIA](https://documenter.getpostman.com/view/11032996/SzfCUmMP?version=latest) is not CORS-ready: it does not expose the "Access-Control-Allow-Origin" header, so the browser is not allowed to use obtain resources. The way I tricked the problem was by running a proxy server locally that get the request. This last, is not sent directly the the URL, instead goes to the proxy. It makes the request on the browser behalf and, this is the peculiarity, it adds CORS headers.
 
 > npm i cors-anywhere
@@ -39,3 +41,7 @@ function proxy() {
 And run it as a plugin like so `!production && proxy()`.
 
 Least, when fetching data, do not target *url* alone but *proxy* + *url*
+
+# Implement Routify
+
+> [tutorial](https://www.youtube.com/watch?v=AGLUJlOC6f0)
