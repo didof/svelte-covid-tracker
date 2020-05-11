@@ -1,4 +1,5 @@
 const urls = require('./urls')
+const parsers = require('./parsers')
 
 const forwardToProxy = async (url) => {
 	console.log('[forwardToProxy]', url)
@@ -17,6 +18,14 @@ const getRegionsList = async () => {
 	return formatted
 }
 
+const getItalySummary = async () => {
+   console.log('[getItalySummary]')
+   const response = await forwardToProxy(urls.italy.summary)
+
+   return response
+}
+
 module.exports = {
 	getRegionsList,
+   getItalySummary
 }
