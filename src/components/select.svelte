@@ -31,12 +31,14 @@
   };
 </script>
 
-{#if fetched}
-  <select value={selected} on:change={handle_change}>
-    {#each fetched as { label, description, datasets }, index (index)}
-      <option value={datasets}>{label}</option>
-    {/each}
-  </select>
-{:else}
-  <div>Loading sets...</div>
-{/if}
+<div class="box">
+  {#if fetched}
+    <select value={selected} on:change={handle_change}>
+      {#each fetched as { label, description, datasets }, index (index)}
+        <option value={datasets}>{label}</option>
+      {/each}
+    </select>
+  {:else}
+    <div>Loading sets...</div>
+  {/if}
+</div>

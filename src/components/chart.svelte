@@ -1,11 +1,9 @@
 <script>
-  import { afterUpdate } from "svelte";
   import Chart from "chart.js";
 
-  export let type = "line";
-  let data = {
-    labels: ["primo", "secondo", "terzo"]
-  };
+  import { afterUpdate } from "svelte";
+
+  import { type } from "../store/type";
 
   export let parsed;
 
@@ -15,14 +13,18 @@
   function createChart() {
     let ctx = element.getContext("2d");
     chart = new Chart(ctx, {
-      type,
+      type: chartType,
       data: parsed
     });
   }
 
+  let chartType;
   afterUpdate(() => {
-    if(chart) chart.destroy()
-    createChart();
+    type.subscribe(value => {
+      chartType = value;
+      if (chart) chart.destroy();
+      createChart();
+    });
   });
 </script>
 

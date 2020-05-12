@@ -11,33 +11,44 @@
 
   let howManyDays;
   let whichSet;
-  let description
-
-  sets.subscribe(async value => {
-    whichSet = value.selected;
-    description = value.description
-
-    const raw = await getData("historic", "italy");
-    const decreased = await selectLast(howManyDays, raw);
-
-    parsed = forChart(decreased, whichSet);
-  });
-
-  days.subscribe(async value => {
-    howManyDays = value;
-    const raw = await getData("historic", "italy");
-    const decreased = await selectLast(howManyDays, raw);
-
-    parsed = forChart(decreased, whichSet);
-  });
-
+  let description;
   let parsed;
+
+  const manageData = async () => {
+    //TODO: will be able to pass 'historic' and 'italy' as arguments
+    const raw = await getData("historic", "italy");
+    const decreased = await selectLast(howManyDays, raw);
+
+    parsed = forChart(decreased, whichSet);
+    return parsed;
+  };
+
+  sets.subscribe(value => {
+    whichSet = value.selected;
+    description = value.description;
+
+    parsed = manageData();
+    return parsed
+  });
+
+  days.subscribe(value => {
+    howManyDays = value;
+
+    parsed = manageData();
+  });
 </script>
 
-<Hero title="Covid-19 Traker" subtitle={description}/>
+<Hero title="Covid-19 Traker" subtitle={description} />
 <div class="container">
   <div class="columns">
-    <div class="column">other</div>
+    <div class="column">
+      <ul>
+        <li>Fai un modal per la creazione di un nuovo set, vedi su quel svelte shopping cart come farlo figo</li>
+        <li>i sets devono essere salvati in localStorage</li>
+        <li>bottone per hard fetch dei dati</li>
+      </ul>
+    
+    </div>
     <div class="column is-three-fifths">
       <Chart {parsed} />
     </div>
@@ -45,38 +56,4 @@
       <Cockpit />
     </div>
   </div>
-
-  <!-- <div class="columns is-5">
-    <div class="column">
-      <Chart type="pie" />
-    </div>
-    <div class="column is-two-thirds">
-      <div class="columns">
-        <div class="column">
-          <Chart {parsed} />
-        </div>
-        <div class="column is-one-quarted">
-          <Cockpit />
-        </div>
-      </div>
-
-    </div>
-  </div> -->
 </div>
-
-<!-- <ul>
-  <li>isolamento_domicilare</li>
-  <li>ricoverati_con_sintomi</li>
-  <li>totale_ospedalizzati</li>
-  <li>terapia_intensiva</li>
-  <li>dimessi_guariti</li>
-  <li>deceduti</li>
-</ul>
-<ul>
-  <li>totale_casi</li>
-  <li>tamponi</li>
-  <li>casi_testati</li>
-  <li>totale_positivi</li>
-  <li>nuovi_positivi</li>
-  <li>variazione_totale_positivi</li>
-</ul> -->
