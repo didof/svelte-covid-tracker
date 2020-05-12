@@ -1,25 +1,30 @@
 <script>
   import Hero from "../components/hero.svelte";
-  import RegionsList from "../components/regionsList.svelte";
+  // import RegionsList from "../components/regionsList.svelte";
   import Chart from "../components/chart.svelte";
 
-  import { onMount } from 'svelte'
-  import { getRegionsList } from "../data";
+  import { onMount } from "svelte";
+  import { getData } from "../data/requests";
+  import parsers from '../data/parsers'
 
-  let regions
+  let regions;
 
+  let parsed
   onMount(async () => {
-    regions = await getRegionsList()
-  })
+    const raw = await getData('historic', 'italy')
+    console.log(raw)
+    parsed = parsers.forChart(raw)
+    // console.log(parsed)
+  });
 </script>
 
 <div class="container">
   <div class="columns is-5">
-    <div class="column is-one-fifth">
-      <RegionsList {regions} />
+    <div class="column is-one-third">
+      <Chart type="pie" />
     </div>
     <div class="column">
-      <Chart />
+      <Chart {parsed} />
     </div>
   </div>
 </div>

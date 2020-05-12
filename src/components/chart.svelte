@@ -1,48 +1,29 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
+  import { afterUpdate } from "svelte";
   import Chart from "chart.js";
 
-  import { getItalySummary } from "../data";
-  import { forItalyChart } from "../data/parsers";
-  let chartType = "bar";
+  export let type = "line";
+  let data = {
+    labels: ["primo", "secondo", "terzo"]
+  };
 
-  let chartElement;
+  export let parsed;
+
+  let element;
   let chart;
 
-  let summary, parsed;
-
   function createChart() {
-    chart = new Chart(chartElement.getContext("2d"), {
-      type: chartType,
+    let ctx = element.getContext("2d");
+    chart = new Chart(ctx, {
+      type,
       data: parsed
     });
   }
 
-  onMount(async () => {
-    summary = await getItalySummary();
-    parsed = await forItalyChart(summary);
+  afterUpdate(() => {
+    if(chart) chart.destroy()
     createChart();
-  });
-
-  onDestroy(() => {
-    if (chart) {
-      chart.destroy();
-    }
   });
 </script>
 
-<select bind:value={chartType}>
-  <option value="line">Line</option>
-  <option value="bar">Bar</option>
-</select>
-<div class="container">
-  <canvas bind:this={chartElement} />
-</div>
-
-<style>
-.container {
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
-</style>
+<canvas width="2" height="1" bind:this={element} />
