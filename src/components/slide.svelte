@@ -1,0 +1,27 @@
+<script>
+  import { onMount } from "svelte";
+  import { days } from "../store/days";
+
+  let howManyDays;
+  onMount(() => {
+    days.subscribe(value => {
+      howManyDays = value;
+    });
+  });
+
+  const handle_changeDays = e => {
+    const { value } = e.target;
+    days.update(item => value);
+  };
+</script>
+
+<div class="box">
+  <p>last {howManyDays} days</p>
+  <input
+    type="range"
+    min="7"
+    max="70"
+    step="1"
+    value={howManyDays}
+    on:change={handle_changeDays} />
+</div>

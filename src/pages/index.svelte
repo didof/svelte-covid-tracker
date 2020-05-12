@@ -1,5 +1,13 @@
 <script>
+  import { onMount, afterUpdate } from "svelte";
+
+  import { Hero, Chart, Cockpit } from "../components";
+
+  import { getData } from "../data/requests";
+  import { forChart, selectLast, selectSet } from "../data/parsers";
+
   import { days } from "../store/days";
+
   let howManyDays;
   days.subscribe(async value => {
     howManyDays = value;
@@ -8,18 +16,15 @@
     parsed = forChart(decreased)
   });
 
-  import { Hero, Chart, Cockpit } from "../components";
-
-  import { onMount, afterUpdate } from "svelte";
-  import { getData } from "../data/requests";
-  import { forChart, selectLast } from "../data/parsers";
-
   let parsed;
-
-
   onMount(async () => {
     const raw = await getData("historic", "italy");
     const decreased = await selectLast(howManyDays, raw);
+
+    let whichSet = ['isolamento_domiciliare', 'nuovi_positivi']
+    const selected = await selectSet(whichSet, decreased)
+    console.log(selected)
+    
     parsed = forChart(decreased);
   });
 </script>
