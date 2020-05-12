@@ -1,18 +1,22 @@
 import { writable } from 'svelte/store'
 
-const mySets = [
-	{
-		label: 'tamponi/casi-testati',
-		description: 'Rapporto tra i tamponi effettuati e i casi testati',
-		datasets: ['tamponi', 'casi_testati'],
-	},
-	{
-		label: 'isolamento/positivi',
-		description:
-			"Rapporto tra il crescere dei nuovi positivi in relazione all'isolamento domiciliare",
-		datasets: ['isolamento_domiciliare', 'nuovi_positivi'],
-	},
-]
+const mySets = {
+	selected: ['tamponi', 'casi_testati'],
+	description: 'Rapporto tra i tamponi effettuati e i casi testati',
+	options: [
+		{
+			label: 'tamponi/casi-testati',
+			description: 'Rapporto tra i tamponi effettuati e i casi testati',
+			datasets: ['tamponi', 'casi_testati'],
+		},
+		{
+			label: 'isolamento/positivi',
+			description:
+				"Rapporto tra il crescere dei nuovi positivi in relazione all'isolamento domiciliare",
+			datasets: ['isolamento_domiciliare', 'nuovi_positivi'],
+		},
+	],
+}
 
 export const sets = writable(mySets)
 

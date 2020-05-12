@@ -7,29 +7,34 @@
   import { forChart, selectLast, selectSet } from "../data/parsers";
 
   import { days } from "../store/days";
+  import { sets } from "../store/sets";
 
   let howManyDays;
+  let whichSet;
+  let description
+
+  sets.subscribe(async value => {
+    whichSet = value.selected;
+    description = value.description
+
+    const raw = await getData("historic", "italy");
+    const decreased = await selectLast(howManyDays, raw);
+
+    parsed = forChart(decreased, whichSet);
+  });
+
   days.subscribe(async value => {
     howManyDays = value;
     const raw = await getData("historic", "italy");
     const decreased = await selectLast(howManyDays, raw);
-    parsed = forChart(decreased)
+
+    parsed = forChart(decreased, whichSet);
   });
 
   let parsed;
-  onMount(async () => {
-    const raw = await getData("historic", "italy");
-    const decreased = await selectLast(howManyDays, raw);
-
-    let whichSet = ['isolamento_domiciliare', 'nuovi_positivi']
-    const selected = await selectSet(whichSet, decreased)
-    console.log(selected)
-    
-    parsed = forChart(decreased);
-  });
 </script>
 
-<Hero title="Covid-19 Traker" />
+<Hero title="Covid-19 Traker" subtitle={description}/>
 <div class="container">
   <div class="columns">
     <div class="column">other</div>
