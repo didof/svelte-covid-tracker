@@ -11,10 +11,11 @@
 
   let parsed
   onMount(async () => {
+
+
     const raw = await getData('historic', 'italy')
-    console.log(raw)
     parsed = parsers.forChart(raw)
-    // console.log(parsed)
+    sessionStorage.setItem
   });
 </script>
 
