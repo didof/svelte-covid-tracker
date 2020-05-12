@@ -1,33 +1,57 @@
 <script>
-  import Hero from "../components/hero.svelte";
-  // import RegionsList from "../components/regionsList.svelte";
-  import Chart from "../components/chart.svelte";
+  import { days } from "../store/days";
+  let howManyDays;
+  days.subscribe(async value => {
+    howManyDays = value;
+    const raw = await getData("historic", "italy");
+    const decreased = await selectLast(howManyDays, raw);
+    parsed = forChart(decreased)
+  });
 
-  import { onMount } from "svelte";
+  import { Hero, Chart, Cockpit } from "../components";
+
+  import { onMount, afterUpdate } from "svelte";
   import { getData } from "../data/requests";
-  import parsers from '../data/parsers'
+  import { forChart, selectLast } from "../data/parsers";
 
-  let regions;
+  let parsed;
 
-  let parsed
+
   onMount(async () => {
-
-
-    const raw = await getData('historic', 'italy')
-    parsed = parsers.forChart(raw)
-    sessionStorage.setItem
+    const raw = await getData("historic", "italy");
+    const decreased = await selectLast(howManyDays, raw);
+    parsed = forChart(decreased);
   });
 </script>
 
+<Hero title="Covid-19 Traker" />
 <div class="container">
-  <div class="columns is-5">
-    <div class="column is-one-third">
-      <Chart type="pie" />
-    </div>
-    <div class="column">
+  <div class="columns">
+    <div class="column">other</div>
+    <div class="column is-three-fifths">
       <Chart {parsed} />
     </div>
+    <div class="column">
+      <Cockpit />
+    </div>
   </div>
+
+  <!-- <div class="columns is-5">
+    <div class="column">
+      <Chart type="pie" />
+    </div>
+    <div class="column is-two-thirds">
+      <div class="columns">
+        <div class="column">
+          <Chart {parsed} />
+        </div>
+        <div class="column is-one-quarted">
+          <Cockpit />
+        </div>
+      </div>
+
+    </div>
+  </div> -->
 </div>
 
 <!-- <ul>

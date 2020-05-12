@@ -1,31 +1,3 @@
-const forItalyChart = (fetch) => {
-	let fetched = fetch[0]
-
-	let chartData = {
-		labels: [
-			'isolamento_domiciliare',
-			'ricoverati_con_sintomi',
-			'totale_ospedalizzati',
-			'terapia_intensiva',
-			'dimessi_guariti',
-			'deceduti',
-		],
-		datasets: [
-			{
-				label: 'Italia',
-				data: [],
-				backgroundColor: ['skyblue', 'yellow', 'orange', 'red', 'blue', 'black'],
-			},
-		],
-	}
-
-	chartData.labels.forEach((label) => {
-		chartData.datasets[0].data.push(fetched[label])
-	})
-
-	return chartData
-}
-
 const setLabels = (raw, label) => {
 	return raw.map((el) => el[label])
 }
@@ -69,12 +41,13 @@ const forChart = (raw) => {
 	}
 }
 
-
-
-// checkpoint
+const selectLast = async (howMany, raw) => {
+	return raw.splice((raw.length - howMany), howMany)
+}
 
 module.exports = {
 	forChart,
+	selectLast
 }
 
 // casi_testati: 0

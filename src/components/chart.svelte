@@ -26,4 +26,4 @@
   });
 </script>
 
-<canvas width="2" height="1" bind:this={element} />
+<canvas width="5" height="3" bind:this={element} />
