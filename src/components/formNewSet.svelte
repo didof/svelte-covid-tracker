@@ -6,11 +6,11 @@
   import { sets } from "../store/sets";
   import { ui } from "../store/ui";
 
-  let options = null
+  let options = null;
   onMount(() => {
     // the issue is that when this component mounts, the options are not ye saved in the sessionStorage, so options var will be null, therefore the modal is partially incomplete. To solve this issue I force it to call again if the first time was not successufll
     options = checkPrevData("options") ? checkPrevData("options") : null;
-  })
+  });
 
   let label = "";
   let description = "";
@@ -18,14 +18,13 @@
 
   let saveInLocalStorage = false;
   const key = "custom-sets";
-  
 
   const handle_create = () => {
     // create newSet object
     let isValid = validation();
     if (!isValid) return;
 
-    const newSet = { label, description, datasets };
+    const newSet = { label, description, datasets, id: new Date().getTime() };
 
     // updated sets
     sets.update(value => ({

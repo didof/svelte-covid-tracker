@@ -10,12 +10,14 @@ let defaultSets = {
 			label: 'tamponi/casi-testati',
 			description: 'Rapporto tra i tamponi effettuati e i casi testati',
 			datasets: ['tamponi', 'casi_testati'],
+			id: false
 		},
 		{
 			label: 'isolamento/positivi',
 			description:
 				"Rapporto tra il crescere dei nuovi positivi in relazione all'isolamento domiciliare",
 			datasets: ['isolamento_domiciliare', 'nuovi_positivi'],
+			id: false
 		},
 		{
 			label: 'climax',
@@ -27,6 +29,7 @@ let defaultSets = {
 				'totale_ospedalizzati',
 				'deceduti',
 			],
+			id: false
 		},
 	],
 }
