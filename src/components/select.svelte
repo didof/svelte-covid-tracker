@@ -7,6 +7,7 @@
 
   let fetched;
   let selected;
+  let isSetCustom = false
 
   const fetchSets = () => {
     sets.subscribe(value => {
@@ -33,6 +34,9 @@
         description: selectedOption.description
       };
     });
+
+    // check if selected custom set, if so, di-disable to remove button
+    isSetCustom = isCustom()
   };
 
   const handle_modal = () => {
@@ -41,6 +45,21 @@
       modal: !value.modal
     }));
   };
+
+  const isCustom = () => {
+    let itIs = false
+    const selectedString = selected.join("-");
+    fetched.forEach(el => {
+      let dataset = el.datasets.join("-");
+      if (dataset === selectedString && el.id !== false) {
+        // element found and id is not false, so it's a custom one
+        itIs = true;
+      }
+    });
+
+    return itIs
+  };
+
 
   const handle_remove = () => {
     const selectedString = selected.join("-");
@@ -72,7 +91,7 @@
     padding-bottom: 5px;
   }
   .is-custom {
-    color: red;
+    font-style: italic
   }
 </style>
 
@@ -91,6 +110,7 @@
       </button>
       <button
         class="button is-danger is-outlined is-rounded is-small"
+        disabled={!isSetCustom}
         on:click={handle_remove}>
         Remove
       </button>
