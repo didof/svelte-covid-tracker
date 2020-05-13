@@ -11,7 +11,7 @@
 
   let howManyDays;
   let whichSet;
-  let description;
+  let description = 'Rapporto tra i tamponi effettuati e i casi testati';
   let parsed;
 
   const manageData = async () => {

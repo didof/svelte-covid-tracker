@@ -10,7 +10,9 @@
 
   onMount(() => {
     sets.subscribe(value => {
+      console.log(fetched)
       fetched = value.options;
+      console.log(fetched)
       selected = value.selected;
     });
   });

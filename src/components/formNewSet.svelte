@@ -12,7 +12,8 @@
   let description = "";
   let datasets = [];
 
-  let save = false;
+  let saveInLocalStorage = false;
+  const key = "custom-sets";
 
   onMount(() => {
     options = checkPrevData("options");
@@ -20,6 +21,9 @@
 
   const handle_create = () => {
     // create newSet object
+    let isValid = validation();
+    if (!isValid) return;
+
     const newSet = { label, description, datasets };
 
     // updated sets
@@ -29,6 +33,19 @@
       description,
       options: [...value.options, newSet]
     }));
+
+    // check if must save in localStorage
+    if (saveInLocalStorage) {
+      let customSets;
+      // retrieve previous custom sets (if any)
+      const prev = JSON.parse(localStorage.getItem(key));
+      if (prev) {
+        customSets = [...prev, newSet];
+      } else {
+        customSets = [newSet];
+      }
+      localStorage.setItem(key, JSON.stringify(customSets));
+    }
 
     // close the modal
     ui.update(value => ({
@@ -46,9 +63,13 @@
     datasets = "";
   };
 
-  const handle_change = e => {
-    const { value } = e.target;
-    save = value;
+  const handle_switch = e => {
+    saveInLocalStorage = !saveInLocalStorage;
+  };
+
+  const validation = () => {
+    if (!label || !description || datasets.length < 1) return false;
+    return true;
   };
 </script>
 
@@ -87,12 +108,16 @@
   {/each}
 {/if}
 
-<button class="button is-success" on:click={handle_create}>Save</button>
-<select value={save} on:change={handle_change}>
-  <option value={false}>temporarily</option>
-  <option value="sessionStorage">in session</option>
-  <option value="localStorage">in local</option>
-</select>
+<div class="buttons has-addons">
+  <button class="button is-success" on:click={handle_create}>Save</button>
+  <button
+    class="button is-light"
+    on:click={handle_switch}
+    class:is-info={!saveInLocalStorage}
+    class:is-success={saveInLocalStorage}>
+    {#if saveInLocalStorage}in localStorage{:else}temporarily{/if}
+  </button>
+</div>
 <button class="button is-success is-light" on:click={handle_cancel}>
   Cancel
 </button>

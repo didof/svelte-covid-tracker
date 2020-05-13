@@ -1,6 +1,8 @@
 import { writable } from 'svelte/store'
 
-const mySets = {
+const key = 'custom-sets'
+
+let defaultSets = {
 	selected: ['tamponi', 'casi_testati'],
 	description: 'Rapporto tra i tamponi effettuati e i casi testati',
 	options: [
@@ -17,8 +19,7 @@ const mySets = {
 		},
 		{
 			label: 'climax',
-			description:
-				"Climax di gravità del paziente",
+			description: 'Climax di gravità del paziente',
 			datasets: [
 				'isolamento_domiciliare',
 				'ricoverati_con_sintomi',
@@ -30,11 +31,21 @@ const mySets = {
 	],
 }
 
-export const sets = writable(mySets)
+const checkIfPrevDataAndInject = (defaultData) => {
+	let customSets = JSON.parse(localStorage.getItem(key))
+	if (customSets) {
+		return {
+			...defaultData,
+			options: defaultData.options.concat(customSets),
+		}
+	}
 
-sets.subscribe((value) => {
-	console.log('I change anytime sets is updated')
-})
+	return defaultData
+}
+
+export const sets = writable(checkIfPrevDataAndInject(defaultSets))
+
+sets.subscribe((value) => {})
 
 //TODO:
 /* user will be able to create it own set and it will be saved on localStorage */

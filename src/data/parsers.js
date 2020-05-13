@@ -17,7 +17,8 @@ const setDataset = (raw, sets) => {
 	return sets.map((set) => buildDataset(raw, set))
 }
 
-const forChart = (raw, sets) => {
+const forChart = (raw, sets = ['tamponi', 'casi_testati']) => {
+	console.log(sets)
 	const pickedSets = sets.map((set) => {
 		return {
 			label: set,
