@@ -4,9 +4,17 @@
   import ChartType from "./chartType.svelte";
 </script>
 
+<style>
+  :global(.withDivider) {
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+</style>
+
 <div class="card">
   <header class="card-header">
-    <p class="card-header-title">Cockpit</p>
+    <p class="card-header-title is-size-3 has-text-dark">Cockpit</p>
     <span class="card-header-icon" aria-label="more options">
       <span class="icon">
         <i class="fas fa-angle-down" aria-hidden="true" />
@@ -15,7 +23,7 @@
   </header>
   <div class="card-content">
     <div class="content">
-      <ChartType />
+      <!-- <ChartType /> -->
       <Slide />
       <Select />
     </div>

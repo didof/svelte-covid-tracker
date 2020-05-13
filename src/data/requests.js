@@ -10,18 +10,21 @@ const saveOptions = (data) => {
 const getData = async (type, location, region = undefined) => {
 	const key = generateKey(type, location)
 	const prevFormatted = checkPrevData(key)
-	saveOptions(prevFormatted)
-
-	if (prevFormatted) return prevFormatted
+	if (prevFormatted) {
+		if (type !== 'list') saveOptions(prevFormatted)
+		return prevFormatted
+	}
 
 	let url = urls[location][type]
 	if (region) {
 		url = url.replace('%REGION%', region)
 	}
+
 	const response = await fetch(urls.proxy + url)
 	const formatted = await response.json()
 
 	saveInSession(key, formatted)
+	if (type !== 'list') saveOptions(formatted)
 
 	return formatted
 }
@@ -44,5 +47,5 @@ const saveInSession = (key, data) => {
 
 module.exports = {
 	getData,
-	checkPrevData
+	checkPrevData,
 }

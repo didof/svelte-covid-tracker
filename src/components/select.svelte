@@ -10,9 +10,7 @@
 
   onMount(() => {
     sets.subscribe(value => {
-      console.log(fetched)
       fetched = value.options;
-      console.log(fetched)
       selected = value.selected;
     });
   });
@@ -41,19 +39,35 @@
   };
 </script>
 
-{#if fetched}
-  <div class="columns is-gapless">
-    <div class="column">
-      <select value={selected} on:change={handle_change}>
-        {#each fetched as { label, description, datasets }, index (index)}
-          <option value={datasets}>{label}</option>
-        {/each}
-      </select>
+<style>
+  .buttons {
+    margin-top: 5px;
+  }
+  select {
+    border: none;
+    outline: none;
+  }
+  
+</style>
+
+<div class="container withDivider">
+  {#if fetched}
+    <select value={selected} on:change={handle_change}>
+      {#each fetched as { label, description, datasets }, index (index)}
+        <option value={datasets}>{label}</option>
+      {/each}
+    </select>
+    <div class="buttons has-addons is-centered">
+      <button class="button is-primary is-rounded" on:click={handle_modal}>
+        Add
+      </button>
+      <button
+        class="button is-danger is-outlined is-rounded"
+        on:click={handle_modal}>
+        Remove
+      </button>
     </div>
-    <div class="column is-one-fitfh">
-      <button on:click={handle_modal}>+</button>
-    </div>
-  </div>
-{:else}
-  <div>Loading sets...</div>
-{/if}
+  {:else}
+    <div>Loading sets...</div>
+  {/if}
+</div>

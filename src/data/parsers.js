@@ -6,7 +6,7 @@ const setLabels = (raw, label) => {
 
 const buildDataset = (raw, set) => {
 	return {
-		label: set.label.replace('_', ' '),
+		label: set.label.split('_').join(' '),
 		data: raw.map((el) => el[set.label]),
 		backgroundColor: set.backgroundColor,
 		borderColor: set.borderColor,
@@ -18,7 +18,6 @@ const setDataset = (raw, sets) => {
 }
 
 const forChart = (raw, sets = ['tamponi', 'casi_testati']) => {
-	console.log(sets)
 	const pickedSets = sets.map((set) => {
 		return {
 			label: set,

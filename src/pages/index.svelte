@@ -1,7 +1,7 @@
 <script>
   import { onMount, afterUpdate } from "svelte";
 
-  import { Hero, Chart, Cockpit, Modal, FromNewSet } from "../components";
+  import { Hero, Chart, Cockpit, Modal, FromNewSet, List } from "../components";
 
   import { getData } from "../data/requests";
   import { forChart, selectLast } from "../data/parsers";
@@ -11,7 +11,7 @@
 
   let howManyDays;
   let whichSet;
-  let description = 'Rapporto tra i tamponi effettuati e i casi testati';
+  let description = "Rapporto tra i tamponi effettuati e i casi testati";
   let parsed;
 
   const manageData = async () => {
@@ -25,6 +25,7 @@
 
   sets.subscribe(value => {
     whichSet = value.selected;
+
     description = value.description;
 
     parsed = manageData();
@@ -50,23 +51,21 @@
 <div class="container">
   <div class="columns">
     <div class="column">
-      <ul>
-        <li>
-          Fai un modal per la creazione di un nuovo set, vedi su quel svelte
-          shopping cart come farlo figo
-        </li>
-        <li>i sets devono essere salvati in localStorage</li>
-        <li>bottone per hard fetch dei dati</li>
-        <li>
-          migliore lo slider (fare da una data fino a un'alta, eventualmente
-          today)
-        </li>
-      </ul>
-
+      <List />
     </div>
     <div class="column is-three-fifths">
-      <Chart {parsed} />
-      <p>{description}</p>
+      <div class="card">
+        <div class="card-header">
+          <p class="card-header-title has-text-dark is-size-4">{whichSet}</p>
+        </div>
+        <div class="card-image">
+          <Chart {parsed} />
+        </div>
+        <div class="card-content">
+          <p class="has-text-dark is-size-4">{description}</p>
+        </div>
+      </div>
+
     </div>
     <div class="column">
       <Cockpit />

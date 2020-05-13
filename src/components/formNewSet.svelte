@@ -1,12 +1,16 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, afterUpdate } from "svelte";
 
   import { checkPrevData } from "../data/requests";
 
   import { sets } from "../store/sets";
   import { ui } from "../store/ui";
 
-  let options;
+  let options = null
+  onMount(() => {
+    // the issue is that when this component mounts, the options are not ye saved in the sessionStorage, so options var will be null, therefore the modal is partially incomplete. To solve this issue I force it to call again if the first time was not successufll
+    options = checkPrevData("options") ? checkPrevData("options") : null;
+  })
 
   let label = "";
   let description = "";
@@ -14,10 +18,7 @@
 
   let saveInLocalStorage = false;
   const key = "custom-sets";
-
-  onMount(() => {
-    options = checkPrevData("options");
-  });
+  
 
   const handle_create = () => {
     // create newSet object
