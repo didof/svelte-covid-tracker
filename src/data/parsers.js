@@ -29,7 +29,7 @@ const forChart = (raw, sets) => {
 
 	return {
 		labels: setLabels(raw, 'data'),
-		datasets: setDataset(raw, pickedSets),
+		datasets: setDataset(raw, pickedSets)
 	}
 }
 

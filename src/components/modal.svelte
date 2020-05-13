@@ -1,7 +1,6 @@
 <script>
   export let title = "default";
   export let deleteBtn = false;
-  export let content = "default";
 
   import { ui } from "../store/ui";
 
@@ -27,7 +26,7 @@
         <button class="delete" aria-label="close" on:click={toggle} />
       {/if}
     </header>
-    <section class="modal-card-body">{content}</section>
+    <section class="modal-card-body"><slot /></section>
     <footer class="modal-card-foot">
       <button class="button is-success">Save changes</button>
       <button class="button">Cancel</button>

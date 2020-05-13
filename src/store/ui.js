@@ -7,5 +7,5 @@ const initial = {
 export const ui = writable(initial)
 
 ui.subscribe(value => {
-   console.log(value, 'ui')
+   // console.log(value, 'ui')
 })

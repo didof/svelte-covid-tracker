@@ -1,5 +1,5 @@
 const SHADES = {
-	light: 0.1,
+	light: 0,
 	heavy: 0.9,
 }
 

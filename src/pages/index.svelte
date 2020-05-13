@@ -1,7 +1,7 @@
 <script>
   import { onMount, afterUpdate } from "svelte";
 
-  import { Hero, Chart, Cockpit, Modal } from "../components";
+  import { Hero, Chart, Cockpit, Modal, FromNewSet } from "../components";
 
   import { getData } from "../data/requests";
   import { forChart, selectLast } from "../data/parsers";
@@ -18,8 +18,8 @@
     //TODO: will be able to pass 'historic' and 'italy' as arguments
     const raw = await getData("historic", "italy");
     const decreased = await selectLast(howManyDays, raw);
-
     parsed = forChart(decreased, whichSet);
+
     return parsed;
   };
 
@@ -37,14 +37,16 @@
     parsed = manageData();
   });
 
-  const config_modal = {
+  const config = {
     title: "Create Custom Set",
     deleteBtn: true
   };
 </script>
 
 <!-- <Hero title="Covid-19 Traker" subtitle={description} /> -->
-<Modal {...config_modal} />
+<Modal {...config}>
+  <FromNewSet />
+</Modal>
 <div class="container">
   <div class="columns">
     <div class="column">

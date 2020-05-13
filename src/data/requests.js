@@ -1,9 +1,17 @@
 const urls = require('./urls')
 const parsers = require('./parsers')
 
+const saveOptions = (data) => {
+	let options = Object.keys(data[0])
+	options.splice(0, 2)
+	saveInSession('options', options)
+}
+
 const getData = async (type, location, region = undefined) => {
 	const key = generateKey(type, location)
 	const prevFormatted = checkPrevData(key)
+	saveOptions(prevFormatted)
+
 	if (prevFormatted) return prevFormatted
 
 	let url = urls[location][type]
@@ -36,4 +44,5 @@ const saveInSession = (key, data) => {
 
 module.exports = {
 	getData,
+	checkPrevData
 }

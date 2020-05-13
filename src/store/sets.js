@@ -43,7 +43,7 @@ const mySets = {
 export const sets = writable(mySets)
 
 sets.subscribe((value) => {
-	console.log(value, 'sets')
+	// console.log(value, 'sets')
 })
 
 //TODO:
