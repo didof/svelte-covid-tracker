@@ -11,9 +11,7 @@
   };
 </script>
 
-<div class="box">
-  <select bind:value={chartType} on:change={handle_change}>
-    <option value="line">line</option>
-    <option value="bar">bar</option>
-  </select>
-</div>
+<select bind:value={chartType} on:change={handle_change}>
+  <option value="line">line</option>
+  <option value="bar">bar</option>
+</select>

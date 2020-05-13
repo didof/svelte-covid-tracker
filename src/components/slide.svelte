@@ -15,13 +15,11 @@
   };
 </script>
 
-<div class="box">
-  <p>last {howManyDays} days</p>
-  <input
-    type="range"
-    min="7"
-    max="70"
-    step="1"
-    value={howManyDays}
-    on:change={handle_changeDays} />
-</div>
+<p>last {howManyDays} days</p>
+<input
+  type="range"
+  min="7"
+  max="70"
+  step="1"
+  value={howManyDays}
+  on:change={handle_changeDays} />

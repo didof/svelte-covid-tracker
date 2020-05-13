@@ -4,7 +4,7 @@
   import { Hero, Chart, Cockpit, Modal } from "../components";
 
   import { getData } from "../data/requests";
-  import { forChart, selectLast, selectSet } from "../data/parsers";
+  import { forChart, selectLast } from "../data/parsers";
 
   import { days } from "../store/days";
   import { sets } from "../store/sets";
