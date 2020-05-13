@@ -1,7 +1,11 @@
+const moment = require('moment')
+
 const colors = require('./colors')
 
 const setLabels = (raw, label) => {
-	return raw.map((el) => el[label])
+	return raw.map((el) => {
+		return moment(el[label]).format('MMM Do')
+	})
 }
 
 const buildDataset = (raw, set) => {
@@ -29,7 +33,7 @@ const forChart = (raw, sets = ['tamponi', 'casi_testati']) => {
 
 	return {
 		labels: setLabels(raw, 'data'),
-		datasets: setDataset(raw, pickedSets)
+		datasets: setDataset(raw, pickedSets),
 	}
 }
 
