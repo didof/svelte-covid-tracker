@@ -7,4 +7,4 @@
 <h1>Cockpit</h1>
 <ChartType />
 <Slide />
-<Select />
+<Select /> 

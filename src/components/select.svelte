@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { sets } from "../store/sets";
+  import { ui } from '../store/ui'
 
   import { formatToArray } from "../data/parsers";
 
@@ -29,15 +30,29 @@
       };
     });
   };
+
+  const handle_modal = () => {
+    ui.update(value => ({
+      ...value,
+      modal: !value.modal
+    }))
+  }
 </script>
 
 <div class="box">
   {#if fetched}
-    <select value={selected} on:change={handle_change}>
-      {#each fetched as { label, description, datasets }, index (index)}
-        <option value={datasets}>{label}</option>
-      {/each}
-    </select>
+    <div class="columns is-gapless">
+      <div class="column">
+        <select value={selected} on:change={handle_change}>
+          {#each fetched as { label, description, datasets }, index (index)}
+            <option value={datasets}>{label}</option>
+          {/each}
+        </select>
+      </div>
+      <div class="column is-one-fitfh">
+        <button on:click={handle_modal}>+</button>
+      </div>
+    </div>
   {:else}
     <div>Loading sets...</div>
   {/if}

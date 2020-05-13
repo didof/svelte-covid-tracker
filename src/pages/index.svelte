@@ -1,7 +1,7 @@
 <script>
   import { onMount, afterUpdate } from "svelte";
 
-  import { Hero, Chart, Cockpit } from "../components";
+  import { Hero, Chart, Cockpit, Modal } from "../components";
 
   import { getData } from "../data/requests";
   import { forChart, selectLast, selectSet } from "../data/parsers";
@@ -28,7 +28,7 @@
     description = value.description;
 
     parsed = manageData();
-    return parsed
+    return parsed;
   });
 
   days.subscribe(value => {
@@ -36,21 +36,35 @@
 
     parsed = manageData();
   });
+
+  const config_modal = {
+    title: "Create Custom Set",
+    deleteBtn: true
+  };
 </script>
 
-<Hero title="Covid-19 Traker" subtitle={description} />
+<!-- <Hero title="Covid-19 Traker" subtitle={description} /> -->
+<Modal {...config_modal} />
 <div class="container">
   <div class="columns">
     <div class="column">
       <ul>
-        <li>Fai un modal per la creazione di un nuovo set, vedi su quel svelte shopping cart come farlo figo</li>
+        <li>
+          Fai un modal per la creazione di un nuovo set, vedi su quel svelte
+          shopping cart come farlo figo
+        </li>
         <li>i sets devono essere salvati in localStorage</li>
         <li>bottone per hard fetch dei dati</li>
+        <li>
+          migliore lo slider (fare da una data fino a un'alta, eventualmente
+          today)
+        </li>
       </ul>
-    
+
     </div>
     <div class="column is-three-fifths">
       <Chart {parsed} />
+      <p>{description}</p>
     </div>
     <div class="column">
       <Cockpit />
