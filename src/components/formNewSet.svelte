@@ -10,22 +10,45 @@
 
   let label = "";
   let description = "";
-
   let datasets = [];
+
+  let save = false;
+
   onMount(() => {
     options = checkPrevData("options");
   });
 
   const handle_create = () => {
+    // create newSet object
     const newSet = { label, description, datasets };
+
+    // updated sets
     sets.update(value => ({
       ...value,
+      selected: datasets,
+      description,
       options: [...value.options, newSet]
     }));
+
+    // close the modal
     ui.update(value => ({
       ...value,
       modal: !value.modal
     }));
+
+    // empty the form
+    handle_cancel();
+  };
+
+  const handle_cancel = () => {
+    label = "";
+    description = "";
+    datasets = "";
+  };
+
+  const handle_change = e => {
+    const { value } = e.target;
+    save = value;
   };
 </script>
 
@@ -64,4 +87,12 @@
   {/each}
 {/if}
 
-<button on:click={handle_create}>Create</button>
+<button class="button is-success" on:click={handle_create}>Save</button>
+<select value={save} on:change={handle_change}>
+  <option value={false}>temporarily</option>
+  <option value="sessionStorage">in session</option>
+  <option value="localStorage">in local</option>
+</select>
+<button class="button is-success is-light" on:click={handle_cancel}>
+  Cancel
+</button>

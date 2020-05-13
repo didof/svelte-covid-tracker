@@ -27,23 +27,13 @@ const mySets = {
 				'deceduti',
 			],
 		},
-		{
-			label: 'custom juan',
-			description:
-				"My first custom datasets",
-			datasets: [
-				'terapia_intensiva',
-				'totale_ospedalizzati',
-				'deceduti',
-			],
-		},
 	],
 }
 
 export const sets = writable(mySets)
 
 sets.subscribe((value) => {
-	// console.log(value, 'sets')
+	console.log('I change anytime sets is updated')
 })
 
 //TODO:

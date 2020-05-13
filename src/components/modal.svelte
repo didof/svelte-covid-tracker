@@ -27,9 +27,5 @@
       {/if}
     </header>
     <section class="modal-card-body"><slot /></section>
-    <footer class="modal-card-foot">
-      <button class="button is-success">Save changes</button>
-      <button class="button">Cancel</button>
-    </footer>
   </div>
 </div>
