@@ -8,7 +8,8 @@ const saveOptions = (data) => {
 }
 
 const getData = async (type, location, region = undefined) => {
-	const key = generateKey(type, location)
+
+	const key = generateKey(type, location, region)
 	const prevFormatted = checkPrevData(key)
 	if (prevFormatted) {
 		if (type !== 'list') saveOptions(prevFormatted)
@@ -17,7 +18,7 @@ const getData = async (type, location, region = undefined) => {
 
 	let url = urls[location][type]
 	if (region) {
-		url = url.replace('%REGION%', region)
+		url = url.replace('%REGION%', region.toLowerCase())
 	}
 
 	const response = await fetch(urls.proxy + url)
@@ -29,8 +30,9 @@ const getData = async (type, location, region = undefined) => {
 	return formatted
 }
 
-const generateKey = (a, b) => {
-	return a + '-' + b
+const generateKey = (a, b, c) => {
+	if (!c) return a + '-' + b
+	else return a + '-' + b + '-' + c.toLowerCase()
 }
 
 const checkPrevData = (key) => {

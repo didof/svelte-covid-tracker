@@ -28,4 +28,6 @@
   });
 </script>
 
-<canvas width="5" height="3" bind:this={element} />
+<div class="container">
+  <canvas width="5" height="3" bind:this={element} />
+</div>
